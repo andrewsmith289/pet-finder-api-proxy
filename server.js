@@ -72,14 +72,14 @@ app.get("/", (req, res) => {
 });
 
 // the route we're working with
-app.get("/pets", (req, res) => {
+app.get("/pets", async (req, res) =>  {
   const query = req.query.name
   
   if (!query) {
     res.statusMessage = "Query not provided";
     res.status(400).end();
   }
-  const data = searchPets(query)
+  const data = await searchPets(query)
   
   
   //console.log(req.query)

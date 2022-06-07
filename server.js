@@ -8,7 +8,7 @@ const dotenv = require("dotenv")
 // enable CORS
 app.use(cors());
 
-dotenv.config()
+//dotenv.config()
 
 // set the port on which our app wil run
 // important to read from environment variable if deploying

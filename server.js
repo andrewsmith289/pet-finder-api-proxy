@@ -1,15 +1,15 @@
 // packages import
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const axios = require("axios");
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const axios = require('axios')
 
 // enable CORS
-app.use(cors());
+app.use(cors())
 
 // set the port on which our app wil run
 // important to read from environment variable if deploying
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000
 
 const PETFINDER_URL = process.env.EXPRESS_APP_PETFINDER_URL
 const PETFINDER_CLIENT_ID = process.env.EXPRESS_APP_CLIENT_ID
@@ -61,34 +61,26 @@ const searchPets = async (text) => {
   return res.data
 }
 
-
-
 // basic string route to prevent Glitch error
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 // the route we're working with
-app.get("/pets", async (req, res) =>  {
+app.get('/pets', async (req, res) => {
   const query = req.query.name
-  
+
   if (!query) {
-    res.statusMessage = "Query not provided";
-    res.status(400).send('Required parameter \'query\' not provided.');
+    res.statusMessage = 'Query not provided'
+    res.status(400).send("Required parameter 'query' not provided.")
     return
   }
   const data = await searchPets(query)
-  
-  
-  console.log(data)
-    // replace with a custom URL as required
-    //const backendUrl = "https://jsonplaceholder.typicode.com/users";
-    // return the data without modification
-    //axios.get(backendUrl).then(response => res.send(response.data));
+
   res.send(data)
-});
+})
 
 // console text when app is running
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
-});
+  console.log(`Server listening at http://localhost:${port}`)
+})

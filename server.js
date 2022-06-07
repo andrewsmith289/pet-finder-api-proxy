@@ -3,12 +3,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const axios = require("axios");
-const dotenv = require("dotenv")
 
 // enable CORS
 app.use(cors());
-
-//dotenv.config()
 
 // set the port on which our app wil run
 // important to read from environment variable if deploying
@@ -61,7 +58,7 @@ const searchPets = async (text) => {
 
   const res = await petfinder.get(`animals?${params}`)
 
-  return res.data.animals
+  return res.data
 }
 
 
@@ -83,7 +80,7 @@ app.get("/pets", async (req, res) =>  {
   const data = await searchPets(query)
   
   
-  //console.log(req.query)
+  console.log(data)
     // replace with a custom URL as required
     //const backendUrl = "https://jsonplaceholder.typicode.com/users";
     // return the data without modification

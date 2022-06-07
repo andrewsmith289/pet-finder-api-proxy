@@ -54,6 +54,16 @@ const refreshAccessToken = async () => {
   return data.data.access_token
 }
 
+const searchPets = async (text) => {
+  const params = new URLSearchParams({
+    name: text,
+  })
+
+  const res = await petfinder.get(`animals?${params}`)
+
+  return res.data.animals
+}
+
 
 
 // basic string route to prevent Glitch error
@@ -63,13 +73,21 @@ app.get("/", (req, res) => {
 
 // the route we're working with
 app.get("/pets", (req, res) => {
+  const query = req.query.name
   
-  console.log(req.query)
+  if (!query) {
+    res.statusMessage = "Query not provided";
+    res.status(400).end();
+  }
+  const data = searchPets(query)
+  
+  
+  //console.log(req.query)
     // replace with a custom URL as required
     //const backendUrl = "https://jsonplaceholder.typicode.com/users";
     // return the data without modification
     //axios.get(backendUrl).then(response => res.send(response.data));
-  res.send('Pets')
+  res.send(data)
 });
 
 // console text when app is running

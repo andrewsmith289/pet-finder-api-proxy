@@ -63,7 +63,7 @@ const searchPets = async (text) => {
 
 // basic string route to prevent Glitch error
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('')
 })
 
 // the route we're working with
@@ -72,7 +72,9 @@ app.get('/pets', async (req, res) => {
 
   if (!query) {
     res.statusMessage = 'Query not provided'
-    res.status(400).send("Required parameter 'query' not provided.")
+    res.status(400).send({
+      error: "Required parameter 'query' not provided.",
+    })
     return
   }
   const data = await searchPets(query)

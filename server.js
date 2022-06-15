@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000
 
 const PETFINDER_URL = process.env.EXPRESS_APP_PETFINDER_URL
 const PETFINDER_CLIENT_ID = process.env.EXPRESS_APP_CLIENT_ID
-const PETFINDER_CLIENT_SECRET = process.env.EXPRESS_APP_CLIENT_KEY
+const PETFINDER_CLIENT_SECRET = process.env.EXPRESS_APP_CLIENT_SECRET
 
 const petfinder = axios.create({
   baseURL: PETFINDER_URL,

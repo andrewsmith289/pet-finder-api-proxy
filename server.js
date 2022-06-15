@@ -51,6 +51,12 @@ const refreshAccessToken = async () => {
   return data.data.access_token
 }
 
+const getTypes = async () => {
+  const res = await petfinder.get('types')
+
+  return res.data
+}
+
 const searchPets = async (text) => {
   const params = new URLSearchParams({
     name: text,
@@ -64,6 +70,12 @@ const searchPets = async (text) => {
 // basic string route to prevent Glitch error
 app.get('/', (req, res) => {
   res.send('')
+})
+
+app.get('/types', async (req, res) => {
+  const data = await getTypes()
+
+  res.send(data)
 })
 
 // the route we're working with

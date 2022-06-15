@@ -71,9 +71,9 @@ app.get('/pets', async (req, res) => {
   const query = req.query.name
 
   if (!query) {
-    res.statusMessage = 'Query not provided'
+    res.statusMessage = "Required parmeter 'name' not provided"
     res.status(400).send({
-      error: "Required parameter 'query' not provided.",
+      error: "Required parameter 'name' not provided.",
     })
     return
   }

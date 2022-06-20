@@ -57,10 +57,11 @@ const getTypes = async () => {
   return res.data
 }
 
-const searchPets = async (text) => {
+const searchPets = async ({ name, petType }) => {
   const params = new URLSearchParams({
-    name: text,
+    name,
   })
+  petType && params.append('type', petType)
 
   const res = await petfinder.get(`animals?${params}`)
 
@@ -80,16 +81,23 @@ app.get('/types', async (req, res) => {
 
 // the route we're working with
 app.get('/pets', async (req, res) => {
-  const query = req.query.name
+  const name = req.query.name
+  const petType = req.query.type
 
-  if (!query) {
+  if (!name) {
     res.statusMessage = "Required parmeter 'name' not provided"
     res.status(400).send({
       error: "Required parameter 'name' not provided.",
     })
     return
   }
-  const data = await searchPets(query)
+
+  const payload = {
+    petType,
+    name,
+  }
+
+  const data = await searchPets(payload)
 
   res.send(data)
 })

@@ -57,13 +57,18 @@ const getTypes = async () => {
   return res.data
 }
 
-const searchPets = async ({ name, petType }) => {
-  const params = new URLSearchParams({
-    name,
-  })
-  petType && params.append('type', petType)
+const searchPets = async ({ name, type }) => {
+  const params = new URLSearchParams()
+  name && params.append('name', name)
+  type && params.append('type', type)
 
   const res = await petfinder.get(`animals?${params}`)
+
+  return res.data
+}
+
+const getPet = async (id) => {
+  const res = await petfinder.get(`animals/${id}`)
 
   return res.data
 }
@@ -82,22 +87,30 @@ app.get('/types', async (req, res) => {
 // the route we're working with
 app.get('/pets', async (req, res) => {
   const name = req.query.name
-  const petType = req.query.type
-
-  if (!name) {
-    res.statusMessage = "Required parmeter 'name' not provided"
-    res.status(400).send({
-      error: "Required parameter 'name' not provided.",
-    })
-    return
-  }
+  const type = req.query.type
 
   const payload = {
-    petType,
     name,
+    type,
   }
 
   const data = await searchPets(payload)
+
+  res.send(data)
+})
+
+app.get('/pet/:id', async (req, res) => {
+  const id = req.params.id
+
+  // if (!id) {
+  //   res.statusMessage = "Required parmeter 'id' not provided"
+  //   res.status(400).send({
+  //     error: "Required parameter 'id' not provided.",
+  //   })
+  //   return
+  // }
+
+  const data = await getPet(id)
 
   res.send(data)
 })

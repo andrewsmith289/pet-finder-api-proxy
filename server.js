@@ -57,7 +57,7 @@ const getTypes = async () => {
   return res.data
 }
 
-const searchPets = async ({ name, type }) => {
+const getPets = async ({ name, type }) => {
   const params = new URLSearchParams()
   name && params.append('name', name)
   type && params.append('type', type)
@@ -94,7 +94,7 @@ app.get('/pets', async (req, res) => {
     type,
   }
 
-  const data = await searchPets(payload)
+  const data = await getPets(payload)
 
   res.send(data)
 })
